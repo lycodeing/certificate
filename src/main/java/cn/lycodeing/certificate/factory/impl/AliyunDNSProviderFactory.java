@@ -1,11 +1,14 @@
-package cn.lycodeing.certificate.handers;
+package cn.lycodeing.certificate.factory.impl;
 
+import cn.lycodeing.certificate.factory.DNSProviderFactory;
 import com.aliyun.alidns20150109.Client;
 import com.aliyun.alidns20150109.models.AddDomainRecordRequest;
 import com.aliyun.alidns20150109.models.DeleteSubDomainRecordsRequest;
 import com.aliyun.teaopenapi.models.Config;
 import com.aliyun.teautil.models.RuntimeOptions;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AliyunDNSProviderFactory implements DNSProviderFactory {
 
     private final static String ENDPOINT = "alidns.cn-shenzhen.aliyuncs.com";
@@ -34,6 +37,7 @@ public class AliyunDNSProviderFactory implements DNSProviderFactory {
                 .setTTL(ttl);
         RuntimeOptions runtime = new RuntimeOptions();
         client.addDomainRecordWithOptions(request, runtime);
+        log.info("AddDomainRecord type:{}, rr: {} , value:{} SUCCESS", type, rr, value);
     }
 
     @Override
@@ -44,5 +48,6 @@ public class AliyunDNSProviderFactory implements DNSProviderFactory {
                 .setRR(rr)
                 .setType(type);
         client.deleteSubDomainRecordsWithOptions(request, runtime);
+        log.info("DeleteSubDomainRecord type:{} ,domainName:{} , rr:{} SUCCESS", type, domainName, rr);
     }
 }

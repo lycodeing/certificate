@@ -1,17 +1,16 @@
 package cn.lycodeing.certificate.enums;
 
-import cn.lycodeing.certificate.service.impl.LetsEncryptCertService;
 import lombok.Getter;
 
 @Getter
-public enum CertTypeEnum {
+public enum CertProviderEnum {
     LETS_ENCRYPT("acme://letsencrypt.org"),
     ZERO_SSL("acme://zerossl.com");
 
 
     private final String caURI;
 
-    CertTypeEnum(String caURI) {
+    CertProviderEnum(String caURI) {
         this.caURI = caURI;
     }
 }
