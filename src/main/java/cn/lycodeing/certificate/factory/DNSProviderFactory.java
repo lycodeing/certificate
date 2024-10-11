@@ -15,10 +15,6 @@ public interface DNSProviderFactory {
 
     /**
      * 删除域名解析记录
-     *
-     * @param domainName 域名
-     * @param rr         主机记录
-     * @param type       记录类型 A/CNAME/TXT
      */
-    void deleteSubDomainRecord(String domainName, String rr, String type) throws Exception;
+    void deleteSubDomainRecord() throws Exception;
 }

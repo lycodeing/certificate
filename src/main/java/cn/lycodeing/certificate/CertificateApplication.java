@@ -34,11 +34,11 @@ public class CertificateApplication {
         CertDTO certDTO = new CertDTO();
         certDTO.setDomain("lycodeing.cn");
         certDTO.setCertPath("/Users/lycodeing/IdeaProjects/certificate/src/main/resources/ssl");
-        certDTO.setEmail("test@qq.com");
+        certDTO.setEmail("195669754598@qq.com");
         certDTO.setDnsType(DnsEnum.ALI_DNS);
         certDTO.setAccessKey("");
         certDTO.setAccessSecret("");
-        certDTO.setCertProvider(CertProviderEnum.ZERO_SSL);
+        certDTO.setCertProvider(CertProviderEnum.LETS_ENCRYPT);
         certDTO.setApiKey("2d3316efcfafc578b793069ecad9d15d");
         certDTO.setDomains(List.of("mm.lycodeing.cn","nn.lycodeing.cn"));
         return certDTO;

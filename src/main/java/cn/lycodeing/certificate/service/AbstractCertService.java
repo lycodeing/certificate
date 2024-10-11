@@ -49,6 +49,7 @@ public abstract class AbstractCertService implements ICertService {
 
     @Override
     public void createCert(CertDTO certDTO) {
+        long startTime = System.currentTimeMillis();
         log.info("The current certificate vendor is:{}", certDTO.getCertProvider());
         setDNSProviderFactory(certDTO.getDnsType(), certDTO.getAccessKey(), certDTO.getAccessSecret());
         // 查询当前申请证书的记录
@@ -59,6 +60,7 @@ public abstract class AbstractCertService implements ICertService {
         } catch (Exception ex) {
             log.error("Failed to generate certificate for domains {},{}", certDTO.getDomain(), ex.getMessage(), ex);
         }
+        log.info("Total time: {} ms", System.currentTimeMillis() - startTime);
         log.info("Certificate generation completed");
     }
 
@@ -119,7 +121,8 @@ public abstract class AbstractCertService implements ICertService {
             log.error("Challenge for domain {} failed, reason: {}", auth.getIdentifier().getDomain(), e.getMessage(), e);
             throw new AcmeException("Challenge failed... Giving up.");
         } finally {
-            dnsProviderFactory.deleteSubDomainRecord(domain, subDomainRR, TYPE);
+            dnsProviderFactory.deleteSubDomainRecord();
+            log.info("DeleteSubDomainRecord type:{} ,domainName:{} , rr:{} SUCCESS", TYPE, domain, subDomainRR);
         }
         log.info("Challenge for domain {} has been completed", auth.getIdentifier().getDomain());
     }
@@ -133,6 +136,7 @@ public abstract class AbstractCertService implements ICertService {
         }
 
         dnsProviderFactory.addDomainRecord(domain, subDomainRR, TYPE, challenge.getDigest(), 600L);
+        log.info("AddDomainRecord type:{}, rr: {} , value:{} SUCCESS", TYPE, subDomainRR, challenge.getDigest());
         challenge.trigger();
 
         challenge.waitForCompletion(TIMEOUT);
