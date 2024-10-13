@@ -32,12 +32,12 @@ public class CertificateApplication {
         certDTO.setDomain("lycodeing.cn");
         certDTO.setCertPath("/Users/lycodeing/Downloads/");
         certDTO.setEmail("195669754598@qq.com");
-        certDTO.setDnsType(DnsEnum.ALI_DNS);
-        certDTO.setAccessKey("");
+        certDTO.setDnsType(DnsEnum.HUAWEI_DNS);
+        certDTO.setAccessKey("4DBH0AXBGEKSEPATEWCX");
         certDTO.setAccessSecret("");
         certDTO.setCertProvider(CertProviderEnum.LETS_ENCRYPT);
         certDTO.setApiKey("2d3316efcfafc578b793069ecad9d15d");
-        certDTO.setDomains(List.of("mm.lycodeing.cn","nn.lycodeing.cn"));
+        certDTO.setDomains(List.of("mm.lycodeing.cn"));
         return certDTO;
     }
 

@@ -17,7 +17,12 @@ public enum DnsEnum {
     /**
      * 西部数码
      */
-    WEST_DNS
+    WEST_DNS,
+
+    /**
+     * 华为云
+     */
+    HUAWEI_DNS
     ;
 
 

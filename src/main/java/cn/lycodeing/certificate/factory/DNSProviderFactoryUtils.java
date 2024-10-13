@@ -2,6 +2,7 @@ package cn.lycodeing.certificate.factory;
 
 import cn.lycodeing.certificate.enums.DnsEnum;
 import cn.lycodeing.certificate.factory.impl.AliyunDNSProviderFactory;
+import cn.lycodeing.certificate.factory.impl.HuaWeiDNSProviderFactory;
 import cn.lycodeing.certificate.factory.impl.TencentDNSProviderFactory;
 import cn.lycodeing.certificate.factory.impl.WestDNSProviderFactory;
 
@@ -12,6 +13,7 @@ public class DNSProviderFactoryUtils {
             case ALI_DNS -> new AliyunDNSProviderFactory(accessKey, accessSecret);
             case TENCENT_DNS -> new TencentDNSProviderFactory(accessKey, accessSecret);
             case WEST_DNS -> new WestDNSProviderFactory(accessKey, accessSecret);
+            case HUAWEI_DNS -> new HuaWeiDNSProviderFactory(accessKey, accessSecret);
             default -> throw new Exception("暂不支持该DNS服务商");
         };
     }
