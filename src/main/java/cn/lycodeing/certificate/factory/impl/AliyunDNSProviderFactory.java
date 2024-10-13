@@ -50,4 +50,5 @@ public class AliyunDNSProviderFactory implements DNSProviderFactory {
         request.setLang("en");
         client.deleteDomainRecord(request);
     }
+
 }

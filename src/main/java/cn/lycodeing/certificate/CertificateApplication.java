@@ -9,10 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootApplication
 public class CertificateApplication {
@@ -33,7 +30,7 @@ public class CertificateApplication {
     private static CertDTO getCertDTO() {
         CertDTO certDTO = new CertDTO();
         certDTO.setDomain("lycodeing.cn");
-        certDTO.setCertPath("/Users/lycodeing/IdeaProjects/certificate/src/main/resources/ssl");
+        certDTO.setCertPath("/Users/lycodeing/Downloads/");
         certDTO.setEmail("195669754598@qq.com");
         certDTO.setDnsType(DnsEnum.ALI_DNS);
         certDTO.setAccessKey("");

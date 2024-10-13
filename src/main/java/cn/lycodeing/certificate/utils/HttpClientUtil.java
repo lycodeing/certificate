@@ -1,19 +1,26 @@
 package cn.lycodeing.certificate.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -103,6 +110,38 @@ public class HttpClientUtil {
         }
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             return EntityUtils.toString(response.getEntity(), "UTF-8");
+        }
+    }
+
+    /**
+     * 发送 POST 请求
+     * 默认请求头为 Content-Type: application/x-www-form-urlencoded
+     */
+    public static String sendPost(String url, Map<String, String> data, Map<String, String> headers) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+
+        // 设置 headers
+        if (headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                httpPost.setHeader(entry.getKey(), entry.getValue());
+            }
+        }
+        // 设置 Content-Type 为 application/x-www-form-urlencoded
+        httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+
+        // 将 map 数据转为 NameValuePair 列表
+        if (data != null) {
+            List<NameValuePair> nameValuePairs = new ArrayList<>();
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            }
+            // 创建 UrlEncodedFormEntity 并与请求关联
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, StandardCharsets.UTF_8));
+        }
+
+        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+            // 返回响应内容
+            return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         }
     }
 

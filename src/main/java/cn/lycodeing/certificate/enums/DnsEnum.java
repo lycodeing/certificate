@@ -12,7 +12,12 @@ public enum DnsEnum {
     /**
      * 百度云
      */
-    BAIDU_DNS
+    BAIDU_DNS,
+
+    /**
+     * 西部数码
+     */
+    WEST_DNS
     ;
 
 

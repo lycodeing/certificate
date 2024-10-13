@@ -147,7 +147,8 @@ public abstract class AbstractCertService implements ICertService {
      * 写入证书和密钥
      */
     private void writeCertificates(Certificate certificate, KeyPair domainKeyPair, String certPath, String domain) throws Exception {
-        File certFile = new File(certPath, domain + ".cert");
+        long currentTimeMillis = System.currentTimeMillis();
+        File certFile = new File(certPath, domain + "." + currentTimeMillis + ".cert");
         FileWriter fw = new FileWriter(certFile);
         try {
             certificate.writeCertificate(fw);
@@ -156,7 +157,7 @@ public abstract class AbstractCertService implements ICertService {
         }
         log.info("Wrote certificate to {}", certFile);
 
-        File keyFile = new File(certPath, domain + ".key");
+        File keyFile = new File(certPath, domain + "." + currentTimeMillis + ".key");
         fw = new FileWriter(keyFile);
         try {
             KeyPairUtils.writeKeyPair(domainKeyPair, fw);
