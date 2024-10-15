@@ -64,6 +64,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.8.0</version>  <!-- 应根据需要更新版本号 -->
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

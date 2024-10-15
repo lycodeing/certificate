@@ -1,6 +1,6 @@
 package cn.lycodeing.certificate.service;
 
-import cn.lycodeing.certificate.dto.CertDTO;
+import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.enums.CertProviderEnum;
 import cn.lycodeing.certificate.enums.DnsEnum;
 import cn.lycodeing.certificate.factory.DNSProviderFactory;
@@ -48,17 +48,17 @@ public abstract class AbstractCertService implements ICertService {
 
 
     @Override
-    public void createCert(CertDTO certDTO) {
+    public void createCert(Context context) {
         long startTime = System.currentTimeMillis();
-        log.info("The current certificate vendor is:{}", certDTO.getCertProvider());
-        setDNSProviderFactory(certDTO.getDnsType(), certDTO.getAccessKey(), certDTO.getAccessSecret());
+        log.info("The current certificate vendor is:{}", context.getCertProvider());
+        setDNSProviderFactory(context.getDnsType(), context.getAccessKey(), context.getAccessSecret());
         // 查询当前申请证书的记录
         try {
-            Certificate certificate = obtainCertificate(certType.getCaURI(), certDTO.getDomain(), certDTO.getCertPath(), certDTO.getEmail(), certDTO.getDomains(), certDTO.getApiKey());
-            log.info("Success! The certificate for domains {} has been generated!", certDTO.getDomains());
+            Certificate certificate = obtainCertificate(certType.getCaURI(), context.getDomain(), context.getCertPath(), context.getEmail(), context.getDomains(), context.getApiKey());
+            log.info("Success! The certificate for domains {} has been generated!", context.getDomains());
             log.info("Certificate URL: {}", certificate.getLocation());
         } catch (Exception ex) {
-            log.error("Failed to generate certificate for domains {},{}", certDTO.getDomain(), ex.getMessage(), ex);
+            log.error("Failed to generate certificate for domains {},{}", context.getDomain(), ex.getMessage(), ex);
         }
         log.info("Total time: {} ms", System.currentTimeMillis() - startTime);
         log.info("Certificate generation completed");

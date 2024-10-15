@@ -140,6 +140,7 @@ public class HttpClientUtil {
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             // 返回响应内容
             return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+
         }
     }
 

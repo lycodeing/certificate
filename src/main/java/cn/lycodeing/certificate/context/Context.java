@@ -1,4 +1,4 @@
-package cn.lycodeing.certificate.dto;
+package cn.lycodeing.certificate.context;
 
 import cn.lycodeing.certificate.enums.CertProviderEnum;
 import cn.lycodeing.certificate.enums.DnsEnum;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-public class CertDTO {
+public class Context {
 
     /**
      * 域名
@@ -55,4 +55,13 @@ public class CertDTO {
      * 账号密钥
      */
     private String accessSecret;
+
+    /**
+     * 输出数据
+     * 例如 域名的证书信息
+     * 保存的路径地址
+     * 文件名称
+     */
+    private Map<String, String> output;
+
 }
