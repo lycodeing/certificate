@@ -1,5 +1,6 @@
 package cn.lycodeing.certificate.service;
 
+import cn.lycodeing.certificate.constant.CommonConstant;
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.enums.CertProviderEnum;
 import cn.lycodeing.certificate.enums.DnsEnum;
@@ -151,24 +152,24 @@ public abstract class AbstractCertService implements ICertService {
      */
     private void writeCertificates(Certificate certificate, KeyPair domainKeyPair, String certPath, String domain) throws Exception {
         long currentTimeMillis = System.currentTimeMillis();
-        String fileName = domain + "." + currentTimeMillis;
+        String fileName = domain + CommonConstant.DOT + currentTimeMillis;
 
         // 写入证书
-        File certFile = new File(certPath, fileName + ".cert");
+        File certFile = new File(certPath, fileName + CommonConstant.CRT_SUFFIX);
         try (FileWriter fw = new FileWriter(certFile)) {
             certificate.writeCertificate(fw);
         }
         log.info("Wrote certificate to {}", certFile);
 
         // 写入PEM文件
-        File pemFile = new File(certPath, fileName + ".pem");
+        File pemFile = new File(certPath, fileName + CommonConstant.PEM_SUFFIX);
         try (FileWriter pemFw = new FileWriter(pemFile)) {
             certificate.writeCertificate(pemFw);
         }
         log.info("Wrote certificate to {}", pemFile);
 
         // 写入密钥
-        File keyFile = new File(certPath, domain + "." + currentTimeMillis + ".key");
+        File keyFile = new File(certPath, domain + CommonConstant.DOT + currentTimeMillis + CommonConstant.KEY_SUFFIX);
         try (FileWriter fw = new FileWriter(keyFile)) {
             KeyPairUtils.writeKeyPair(domainKeyPair, fw);
         }
@@ -190,7 +191,7 @@ public abstract class AbstractCertService implements ICertService {
             return prefix;
         }
         String subStr = subDomain.split(domain)[0].split("\\.")[0];
-        return prefix + "." + subStr;
+        return prefix +CommonConstant.DOT + subStr;
     }
 
 

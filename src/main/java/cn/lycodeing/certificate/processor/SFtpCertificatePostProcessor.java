@@ -13,21 +13,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static cn.lycodeing.certificate.constant.CommonConstant.*;
+
 @Service
 @Slf4j
 public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
-    /**
-     * 证书后缀名crt
-     */
-    private static final String CRT_SUFFIX = ".cert";
-    /**
-     * 密钥后缀名key
-     */
-    private static final String KEY_SUFFIX = ".key";
-    /**
-     * 证书后缀名pem
-     */
-    private static final String PEM_SUFFIX = ".pem";
 
 
     @Override
