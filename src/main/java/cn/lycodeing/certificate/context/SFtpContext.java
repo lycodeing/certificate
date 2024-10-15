@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class FtpContext extends Context {
+public class SFtpContext extends Context {
     /**
      * FTP服务器地址
      */

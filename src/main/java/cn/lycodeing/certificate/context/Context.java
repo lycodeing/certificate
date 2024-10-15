@@ -4,6 +4,7 @@ import cn.lycodeing.certificate.enums.CertProviderEnum;
 import cn.lycodeing.certificate.enums.DnsEnum;
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,6 @@ public class Context {
      * 保存的路径地址
      * 文件名称
      */
-    private Map<String, String> output;
+    private Map<String, String> output = new HashMap<>();
 
 }

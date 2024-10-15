@@ -66,9 +66,9 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-net</groupId>
-            <artifactId>commons-net</artifactId>
-            <version>3.8.0</version>  <!-- 应根据需要更新版本号 -->
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

@@ -33,6 +33,8 @@ public abstract class AbstractCertService implements ICertService {
 
     private CertProviderEnum certType;
 
+    private Context context;
+
     public void setDNSProviderFactory(DnsEnum dns, String accessKey, String accessSecret) {
         try {
             dnsProviderFactory = DNSProviderFactoryUtils.createDnsProviderFactory(
@@ -49,6 +51,7 @@ public abstract class AbstractCertService implements ICertService {
 
     @Override
     public void createCert(Context context) {
+        this.context = context;
         long startTime = System.currentTimeMillis();
         log.info("The current certificate vendor is:{}", context.getCertProvider());
         setDNSProviderFactory(context.getDnsType(), context.getAccessKey(), context.getAccessSecret());
@@ -148,13 +151,22 @@ public abstract class AbstractCertService implements ICertService {
      */
     private void writeCertificates(Certificate certificate, KeyPair domainKeyPair, String certPath, String domain) throws Exception {
         long currentTimeMillis = System.currentTimeMillis();
-        File certFile = new File(certPath, domain + "." + currentTimeMillis + ".cert");
+        String fileName = domain + "." + currentTimeMillis;
+        File certFile = new File(certPath, fileName + ".cert");
         FileWriter fw = new FileWriter(certFile);
         try {
             certificate.writeCertificate(fw);
         } finally {
             fw.close();
         }
+        File pemFile = new File(certPath, fileName + ".pem");
+        FileWriter pemFw = new FileWriter(pemFile);
+        try {
+            certificate.writeCertificate(pemFw);
+        } finally {
+            pemFw.close();
+        }
+
         log.info("Wrote certificate to {}", certFile);
 
         File keyFile = new File(certPath, domain + "." + currentTimeMillis + ".key");
@@ -164,6 +176,10 @@ public abstract class AbstractCertService implements ICertService {
         } finally {
             fw.close();
         }
+        context.getOutput().put("crtFileName", fileName);
+        context.getOutput().put("keyFileName", fileName);
+        context.getOutput().put("pemFileName", fileName);
+        Thread.sleep(1000 * 10);
         log.info("Wrote key to {}", keyFile);
 
     }
