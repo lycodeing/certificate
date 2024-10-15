@@ -152,37 +152,33 @@ public abstract class AbstractCertService implements ICertService {
     private void writeCertificates(Certificate certificate, KeyPair domainKeyPair, String certPath, String domain) throws Exception {
         long currentTimeMillis = System.currentTimeMillis();
         String fileName = domain + "." + currentTimeMillis;
-        File certFile = new File(certPath, fileName + ".cert");
-        FileWriter fw = new FileWriter(certFile);
-        try {
-            certificate.writeCertificate(fw);
-        } finally {
-            fw.close();
-        }
-        File pemFile = new File(certPath, fileName + ".pem");
-        FileWriter pemFw = new FileWriter(pemFile);
-        try {
-            certificate.writeCertificate(pemFw);
-        } finally {
-            pemFw.close();
-        }
 
+        // 写入证书
+        File certFile = new File(certPath, fileName + ".cert");
+        try (FileWriter fw = new FileWriter(certFile)) {
+            certificate.writeCertificate(fw);
+        }
         log.info("Wrote certificate to {}", certFile);
 
+        // 写入PEM文件
+        File pemFile = new File(certPath, fileName + ".pem");
+        try (FileWriter pemFw = new FileWriter(pemFile)) {
+            certificate.writeCertificate(pemFw);
+        }
+        log.info("Wrote certificate to {}", pemFile);
+
+        // 写入密钥
         File keyFile = new File(certPath, domain + "." + currentTimeMillis + ".key");
-        fw = new FileWriter(keyFile);
-        try {
+        try (FileWriter fw = new FileWriter(keyFile)) {
             KeyPairUtils.writeKeyPair(domainKeyPair, fw);
-        } finally {
-            fw.close();
         }
         context.getOutput().put("crtFileName", fileName);
         context.getOutput().put("keyFileName", fileName);
         context.getOutput().put("pemFileName", fileName);
-        Thread.sleep(1000 * 10);
+        Thread.sleep(1000 * 3);
         log.info("Wrote key to {}", keyFile);
-
     }
+
 
 
     /**
