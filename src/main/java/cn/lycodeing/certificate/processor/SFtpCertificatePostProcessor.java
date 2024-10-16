@@ -36,6 +36,7 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
 
         } catch (Exception ex) {
             log.error("Failed to upload certificate to FTP server: {}", ex.getMessage(), ex);
+            throw new RuntimeException("Failed to upload certificate to FTP server");
         }
     }
 
