@@ -18,6 +18,7 @@ public class TencentDNSProviderFactory implements DNSProviderFactory {
 
     private Long recordId;
 
+    private String domainName;
 
     public TencentDNSProviderFactory(String accessKeyId, String accessKeySecret) {
         Credential credential = new Credential(accessKeyId, accessKeySecret);
@@ -35,15 +36,18 @@ public class TencentDNSProviderFactory implements DNSProviderFactory {
         req.setRecordType(type);
         req.setValue(value);
         req.setSubDomain(rr);
+        req.setRecordLine("默认");
         req.setTTL(ttl);
         CreateRecordResponse resp = client.CreateRecord(req);
         recordId = resp.getRecordId();
+        this.domainName = domainName;
     }
 
     @Override
     public void deleteSubDomainRecord() throws Exception {
         DeleteRecordRequest req = new DeleteRecordRequest();
         req.setRecordId(recordId);
+        req.setDomain(domainName);
         client.DeleteRecord(req);
     }
 }
