@@ -41,7 +41,7 @@ public class SSHCertificatePostProcessor implements CertificatePostProcessor {
         }
     }
 
-    public static void executeCommand(Session session, String command) throws Exception {
+    public void executeCommand(Session session, String command) throws Exception {
         Channel channel = null;
         BufferedReader in = null;
 

@@ -41,14 +41,14 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
     }
 
     @NotNull
-    private static ChannelSftp getChannelSftp(Session session) throws JSchException {
+    private ChannelSftp getChannelSftp(Session session) throws JSchException {
         Channel channel = session.openChannel("sftp");
         channel.connect();
         return (ChannelSftp) channel;
     }
 
     @NotNull
-    private static Session getSession(SFtpContext SFtpContext) throws JSchException {
+    private Session getSession(SFtpContext SFtpContext) throws JSchException {
         JSch jsch = new JSch();
         Session session = jsch.getSession(SFtpContext.getUser(), SFtpContext.getHost(), SFtpContext.getPort());
         session.setPassword(SFtpContext.getPassword());
@@ -70,7 +70,7 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
      * @param remotePath  远程目录路径
      * @throws SftpException 如果SFTP操作失败
      */
-    public static void uploadFile(ChannelSftp sftpChannel, String localFile, String remotePath)
+    public void uploadFile(ChannelSftp sftpChannel, String localFile, String remotePath)
             throws SftpException {
         try (InputStream inputStream = new FileInputStream(localFile)) {
             sftpChannel.put(inputStream, remotePath);
@@ -81,7 +81,7 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
     }
 
 
-    public static void createDirectory(ChannelSftp sftpChannel, String fullRemotePath) throws SftpException {
+    public void createDirectory(ChannelSftp sftpChannel, String fullRemotePath) throws SftpException {
         try {
             sftpChannel.lstat(fullRemotePath); // 检查整个路径是否已存在
         } catch (SftpException e) {
