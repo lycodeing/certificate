@@ -2,6 +2,7 @@ package cn.lycodeing.certificate.processor;
 
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.SFtpContext;
+import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
 import com.jcraft.jsch.*;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -113,4 +114,8 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
         }
     }
 
+    @Override
+    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
+        return PostProcessorTypeEnum.SFTP.equals(postProcessorType);
+    }
 }

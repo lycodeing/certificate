@@ -2,6 +2,7 @@ package cn.lycodeing.certificate.processor;
 
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.SSHContext;
+import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
@@ -89,6 +90,10 @@ public class SSHCertificatePostProcessor implements CertificatePostProcessor {
         }
     }
 
+    @Override
+    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
+        return PostProcessorTypeEnum.SSH.equals(postProcessorType);
+    }
 }
 
 
