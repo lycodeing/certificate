@@ -2,7 +2,6 @@ package cn.lycodeing.certificate;
 
 import cn.lycodeing.certificate.constant.SystemConstant;
 import cn.lycodeing.certificate.context.Context;
-import cn.lycodeing.certificate.context.SFtpContext;
 import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -18,19 +17,7 @@ public class CertificateApplication {
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
         Map<String, Object> envs = getEnvs();
         log.info("环境变量:{}", envs);
-        new Context();
-        Context context;
-        String json = GsonUtil.toJson(envs);
-        context = GsonUtil.fromJson(json, Context.class);
-        SFtpContext sFtpContext = new SFtpContext();
-        sFtpContext.setHost("43.156.185.238");
-        sFtpContext.setPort(22);
-        sFtpContext.setUser("root");
-        sFtpContext.setPassword("liyan.99");
-        sFtpContext.setFileName("lycodeing.cn");
-        sFtpContext.setTargetPath("/root/nginx/ssl/");
-        context.setPostProcessorData(GsonUtil.toJson(sFtpContext));
-        CoreService.execute(context, List.of(PostProcessorTypeEnum.SFTP));
+        CoreService.execute(GsonUtil.fromJson(GsonUtil.toJson(envs), Context.class), List.of(PostProcessorTypeEnum.SFTP));
     }
 
 
