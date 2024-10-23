@@ -3,19 +3,15 @@ package cn.lycodeing.certificate.service.impl;
 import cn.lycodeing.certificate.enums.CertProviderEnum;
 import cn.lycodeing.certificate.service.AbstractCertService;
 import lombok.extern.slf4j.Slf4j;
-import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.Account;
+import org.shredzone.acme4j.AccountBuilder;
+import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.exception.AcmeException;
-import org.springframework.stereotype.Service;
 
 import java.security.KeyPair;
 
 @Slf4j
-@Service
 public class LetsEncryptCertService extends AbstractCertService {
-
-    private static final int TIMEOUT = 60;
-    private static final String CA_URI = "acme://letsencrypt.org";
-
 
     /**
      * 在ACME服务器上查找或注册一个新帐户。

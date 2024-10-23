@@ -3,11 +3,11 @@ package cn.lycodeing.certificate.processor;
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.SFtpContext;
 import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.utils.GsonUtil;
 import com.jcraft.jsch.*;
-import io.micrometer.common.util.StringUtils;
+import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import java.util.Properties;
 
 import static cn.lycodeing.certificate.constant.CommonConstant.*;
 
-@Service
 @Slf4j
 public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
 
@@ -24,16 +23,16 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
     @Override
     public void postProcess(Context context) {
         try {
-            SFtpContext SFtpContext = (SFtpContext) context;
-            Session session = getSession(SFtpContext);
+            SFtpContext sFtpContext = GsonUtil.fromJson(context.getPostProcessorData(), SFtpContext.class);
+            Session session = getSession(sFtpContext);
 
             ChannelSftp sftpChannel = getChannelSftp(session);
 
-            createDirectory(sftpChannel, SFtpContext.getTargetPath());
+            createDirectory(sftpChannel, sFtpContext.getTargetPath());
 
-            uploadFile(sftpChannel, SFtpContext.getCertPath() + context.getOutput().get("crtFileName") + CRT_SUFFIX, SFtpContext.getTargetPath() + SFtpContext.getFileName() + CRT_SUFFIX);
-            uploadFile(sftpChannel, SFtpContext.getCertPath() + context.getOutput().get("crtFileName") + PEM_SUFFIX, SFtpContext.getTargetPath() + SFtpContext.getFileName() + PEM_SUFFIX);
-            uploadFile(sftpChannel, SFtpContext.getCertPath() + context.getOutput().get("crtFileName") + KEY_SUFFIX, SFtpContext.getTargetPath() + SFtpContext.getFileName() + KEY_SUFFIX);
+            uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + CRT_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + CRT_SUFFIX);
+            uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + PEM_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + PEM_SUFFIX);
+            uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + KEY_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + KEY_SUFFIX);
 
         } catch (Exception ex) {
             log.error("Failed to upload certificate to FTP server: {}", ex.getMessage(), ex);

@@ -6,9 +6,10 @@ import cn.lycodeing.certificate.utils.GsonUtil;
 import cn.lycodeing.certificate.utils.HttpClientUtil;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
-import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.Account;
+import org.shredzone.acme4j.AccountBuilder;
+import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.exception.AcmeException;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.security.KeyPair;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Service
 public class ZeroSslCertService extends AbstractCertService {
     /**
      * 默认超时时间

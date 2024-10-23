@@ -3,23 +3,22 @@ package cn.lycodeing.certificate.processor;
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.SSHContext;
 import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.utils.GsonUtil;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-@Service
 @Slf4j
 public class SSHCertificatePostProcessor implements CertificatePostProcessor {
     @Override
     public void postProcess(Context context) {
-        SSHContext sshContext = (SSHContext) context;
+        SSHContext sshContext = GsonUtil.fromJson(context.getPostProcessorData(),SSHContext.class);
         try {
             JSch jsch = new JSch();
             // 创建Session实例
@@ -73,13 +72,11 @@ public class SSHCertificatePostProcessor implements CertificatePostProcessor {
                     sb.append(in.readLine()).append("\n");
                 }
                 if (channel.isClosed()) {
-                    System.out.println("Exit status: " + channel.getExitStatus());
+                    log.info("Exit status code : {}", channel.getExitStatus());
                     break;
                 }
-                Thread.sleep(1000);
             }
-            result = sb.toString();
-            System.out.println(result);
+            log.info("Command output: {}", sb);
         } finally {
             if (channel != null && channel.isConnected()) {
                 channel.disconnect();

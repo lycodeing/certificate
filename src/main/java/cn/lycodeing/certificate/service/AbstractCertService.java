@@ -55,7 +55,7 @@ public abstract class AbstractCertService implements ICertService {
         this.context = context;
         long startTime = System.currentTimeMillis();
         log.info("The current certificate vendor is:{}", context.getCertProvider());
-        setDNSProviderFactory(context.getDnsType(), context.getAccessKey(), context.getAccessSecret());
+        setDNSProviderFactory(DnsEnum.valueOf(context.getDnsType()), context.getAccessKey(), context.getAccessSecret());
         // 查询当前申请证书的记录
         try {
             Certificate certificate = obtainCertificate(certType.getCaURI(), context.getDomain(), context.getCertPath(), context.getEmail(), context.getDomains(), context.getApiKey());
@@ -63,6 +63,7 @@ public abstract class AbstractCertService implements ICertService {
             log.info("Certificate URL: {}", certificate.getLocation());
         } catch (Exception ex) {
             log.error("Failed to generate certificate for domains {},{}", context.getDomain(), ex.getMessage(), ex);
+            throw new RuntimeException("Failed to generate certificate for domains " + context.getDomain());
         }
         log.info("Total time: {} ms", System.currentTimeMillis() - startTime);
         log.info("Certificate generation completed");
@@ -181,7 +182,6 @@ public abstract class AbstractCertService implements ICertService {
     }
 
 
-
     /**
      * 匹配子域名.前面的部分
      */
@@ -191,7 +191,7 @@ public abstract class AbstractCertService implements ICertService {
             return prefix;
         }
         String subStr = subDomain.split(domain)[0].split("\\.")[0];
-        return prefix +CommonConstant.DOT + subStr;
+        return prefix + CommonConstant.DOT + subStr;
     }
 
 

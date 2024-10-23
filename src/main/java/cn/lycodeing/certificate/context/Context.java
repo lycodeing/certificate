@@ -1,7 +1,5 @@
 package cn.lycodeing.certificate.context;
 
-import cn.lycodeing.certificate.enums.CertProviderEnum;
-import cn.lycodeing.certificate.enums.DnsEnum;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -24,7 +22,7 @@ public class Context {
     /**
      * 证书供应商
      */
-    private CertProviderEnum certProvider;
+    private String certProvider;
 
     /**
      * 证书供应商的API密钥或认证信息
@@ -44,7 +42,7 @@ public class Context {
     /**
      * dns解析的供应商
      */
-    private DnsEnum dnsType;
+    private String dnsType;
 
     /**
      * 账号公钥
@@ -56,6 +54,13 @@ public class Context {
      * 账号密钥
      */
     private String accessSecret;
+
+
+    /**
+     * 后续处理器数据
+     */
+    private String postProcessorData;
+
 
     /**
      * 输出数据

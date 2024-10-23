@@ -1,11 +1,10 @@
 package cn.lycodeing.certificate.context;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
+
 @Data
-public class SFtpContext extends Context {
+public class SFtpContext   {
     /**
      * FTP服务器地址
      */

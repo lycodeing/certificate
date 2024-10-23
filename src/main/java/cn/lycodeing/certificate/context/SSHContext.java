@@ -1,11 +1,9 @@
 package cn.lycodeing.certificate.context;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class SSHContext extends Context{
+public class SSHContext {
 
     /**
      * 服务器地址
