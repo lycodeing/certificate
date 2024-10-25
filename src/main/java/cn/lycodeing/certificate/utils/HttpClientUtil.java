@@ -6,7 +6,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -106,7 +108,40 @@ public class HttpClientUtil {
                 httpPost.setHeader(entry.getKey(), entry.getValue());
             }
         }
+        httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+            return EntityUtils.toString(response.getEntity(), "UTF-8");
+        }
+    }
+
+    public static String sendPost(String url, byte[] data, Map<String, String> headers) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+        if (data != null) {
+            httpPost.setEntity(new ByteArrayEntity(data));
+        }
+        if (headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                httpPost.setHeader(entry.getKey(), entry.getValue());
+            }
+        }
+        httpPost.setHeader("Content-Type", "application/json");
+        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+            return EntityUtils.toString(response.getEntity(), "UTF-8");
+        }
+    }
+
+    public static String sendPut(String url, byte[] data, Map<String, String> headers) throws IOException {
+        HttpPut httpPut = new HttpPut(url);
+        if (data != null) {
+            httpPut.setEntity(new ByteArrayEntity(data));
+        }
+        if (headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                httpPut.setHeader(entry.getKey(), entry.getValue());
+            }
+        }
+        httpPut.setHeader("Content-Type", "application/json");
+        try (CloseableHttpResponse response = httpClient.execute(httpPut)) {
             return EntityUtils.toString(response.getEntity(), "UTF-8");
         }
     }

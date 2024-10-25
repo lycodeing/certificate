@@ -7,6 +7,7 @@ public class CertificatePostProcessorFactoryUtils {
         return switch (postProcessorType) {
             case SFTP -> new SFtpCertificatePostProcessor();
             case SSH -> new SSHCertificatePostProcessor();
+            case QI_NIU -> new QiNiuCertificatePostProcessor();
             default -> null;
         };
     }

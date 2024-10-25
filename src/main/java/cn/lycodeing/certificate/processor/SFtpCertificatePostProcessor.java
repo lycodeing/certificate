@@ -30,7 +30,7 @@ public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
 
             createDirectory(sftpChannel, sFtpContext.getTargetPath());
 
-            uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + CRT_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + CRT_SUFFIX);
+            uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + CERT_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + CERT_SUFFIX);
             uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + PEM_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + PEM_SUFFIX);
             uploadFile(sftpChannel, context.getCertPath() + context.getOutput().get("crtFileName") + KEY_SUFFIX, sFtpContext.getTargetPath() + sFtpContext.getFileName() + KEY_SUFFIX);
 

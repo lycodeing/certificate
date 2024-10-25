@@ -156,7 +156,7 @@ public abstract class AbstractCertService implements ICertService {
         String fileName = domain + CommonConstant.DOT + currentTimeMillis;
 
         // 写入证书
-        File certFile = new File(certPath, fileName + CommonConstant.CRT_SUFFIX);
+        File certFile = new File(certPath, fileName + CommonConstant.CERT_SUFFIX);
         try (FileWriter fw = new FileWriter(certFile)) {
             certificate.writeCertificate(fw);
         }

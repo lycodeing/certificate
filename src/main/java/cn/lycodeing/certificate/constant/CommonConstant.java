@@ -4,7 +4,7 @@ public class CommonConstant {
     /**
      * 证书后缀名crt
      */
-    public static final String CRT_SUFFIX = ".cert";
+    public static final String CERT_SUFFIX = ".cert";
     /**
      * 密钥后缀名key
      */

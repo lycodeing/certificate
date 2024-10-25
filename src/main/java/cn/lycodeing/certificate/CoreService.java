@@ -7,6 +7,7 @@ import cn.lycodeing.certificate.processor.CertificatePostProcessorFactoryUtils;
 import cn.lycodeing.certificate.service.CertFactoryUtils;
 import cn.lycodeing.certificate.service.ICertService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class CoreService {
      * @param context                上下文信息
      * @param postProcessorTypeEnums 执行后处理类型
      */
-    public static void execute(Context context, List<PostProcessorTypeEnum> postProcessorTypeEnums) {
+    public static void execute(Context context, List<PostProcessorTypeEnum> postProcessorTypeEnums) throws InvocationTargetException, IllegalAccessException {
         ICertService certService = CertFactoryUtils.getCertService(CertProviderEnum.valueOf(context.getCertProvider()));
         certService.createCert(context);
         postProcessorTypeEnums.stream()
@@ -26,5 +27,6 @@ public class CoreService {
                 .filter(Objects::nonNull)
                 .forEach(processor -> processor.postProcess(context));
     }
+
 
 }
