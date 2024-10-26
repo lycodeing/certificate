@@ -17,7 +17,7 @@ import java.util.Properties;
 import static cn.lycodeing.certificate.constant.CommonConstant.*;
 
 @Slf4j
-public class SFtpCertificatePostProcessor implements CertificatePostProcessor {
+public class SFtpCertPostProcessor implements CertPostProcessor {
 
 
     @Override

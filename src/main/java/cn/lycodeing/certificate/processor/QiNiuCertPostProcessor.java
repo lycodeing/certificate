@@ -3,6 +3,7 @@ package cn.lycodeing.certificate.processor;
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.QiNiuContext;
 import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.utils.FileUtil;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import cn.lycodeing.certificate.utils.HttpClientUtil;
 import com.google.gson.annotations.SerializedName;
@@ -14,8 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +24,7 @@ import static cn.lycodeing.certificate.constant.CommonConstant.CERT_SUFFIX;
 import static cn.lycodeing.certificate.constant.CommonConstant.KEY_SUFFIX;
 
 @Slf4j
-public class QiNiuCertificatePostProcessor implements CertificatePostProcessor {
+public class QiNiuCertPostProcessor implements CertPostProcessor {
 
     private static final String END_POINT = "http://api.qiniu.com";
     private static final String UPLOAD_URL = "/sslcert";
@@ -63,11 +62,11 @@ public class QiNiuCertificatePostProcessor implements CertificatePostProcessor {
     }
 
     private String getCert(Context context) throws IOException {
-        return readFileAsString(context.getCertPath() + context.getOutput().get("crtFileName") + CERT_SUFFIX);
+        return FileUtil.readFileAsString(context.getCertPath() + context.getOutput().get("crtFileName") + CERT_SUFFIX);
     }
 
     private String getPrivateKey(Context context) throws IOException {
-        return readFileAsString(context.getCertPath() + context.getOutput().get("keyFileName") + KEY_SUFFIX);
+        return FileUtil.readFileAsString(context.getCertPath() + context.getOutput().get("keyFileName") + KEY_SUFFIX);
     }
 
     private String uploadCertificate(SslRequest sslRequest, QiNiuContext qiNiuContext) throws IOException {
@@ -127,17 +126,6 @@ public class QiNiuCertificatePostProcessor implements CertificatePostProcessor {
 
     private boolean isSuccessResponse(CdnResponse response) {
         return response != null && (response.code == null || response.code == 200);
-    }
-
-    private String readFileAsString(String filePath) throws IOException {
-        StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                contentBuilder.append(currentLine).append("\n"); // 保留换行符
-            }
-        }
-        return contentBuilder.toString();
     }
 
     @Override

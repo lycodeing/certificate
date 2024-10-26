@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @Slf4j
-public class SSHCertificatePostProcessor implements CertificatePostProcessor {
+public class SSHCertPostProcessor implements CertPostProcessor {
     @Override
     public void postProcess(Context context) {
         SSHContext sshContext = GsonUtil.fromJson(context.getPostProcessorData(),SSHContext.class);

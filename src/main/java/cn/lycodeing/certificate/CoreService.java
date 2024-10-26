@@ -3,7 +3,7 @@ package cn.lycodeing.certificate;
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.enums.CertProviderEnum;
 import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
-import cn.lycodeing.certificate.processor.CertificatePostProcessorFactoryUtils;
+import cn.lycodeing.certificate.processor.CertPostProcessorFactoryUtils;
 import cn.lycodeing.certificate.service.CertFactoryUtils;
 import cn.lycodeing.certificate.service.ICertService;
 
@@ -23,7 +23,7 @@ public class CoreService {
         ICertService certService = CertFactoryUtils.getCertService(CertProviderEnum.valueOf(context.getCertProvider()));
         certService.createCert(context);
         postProcessorTypeEnums.stream()
-                .map(CertificatePostProcessorFactoryUtils::getCertificatePostProcessor)
+                .map(CertPostProcessorFactoryUtils::getCertificatePostProcessor)
                 .filter(Objects::nonNull)
                 .forEach(processor -> processor.postProcess(context));
     }
