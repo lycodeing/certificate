@@ -9,6 +9,7 @@ public class CertPostProcessorFactoryUtils {
             case SSH -> new SSHCertPostProcessor();
             case QI_NIU -> new QiNiuCertPostProcessor();
             case TENCENT -> new TencentCertPostProcessor();
+            case ALIYUN -> new AliYunCertPostProcessor();
             default -> null;
         };
     }

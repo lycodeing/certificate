@@ -17,5 +17,9 @@ public enum PostProcessorTypeEnum {
      * 腾讯云
      */
     TENCENT,
+    /**
+     * 阿里云
+     */
+    ALIYUN
 
 }

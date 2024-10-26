@@ -69,10 +69,10 @@ public class TencentCertPostProcessor implements CertPostProcessor {
 
     private void updateCdnSsl(String cdnDomain, String certificateId) throws TencentCloudSDKException {
         if (StringUtils.isEmpty(cdnDomain)) {
-            log.info("未配置CDN域名，跳过CDN证书更新");
+            log.warn("未配置CDN域名，跳过CDN证书更新");
             return;
         }
-        log.error("开始更新CDN证书, cdn域名为：{} ,证书ID：{}", cdnDomain, certificateId);
+        log.info("开始更新CDN证书, cdn域名为：{} ,证书ID：{}", cdnDomain, certificateId);
         HttpProfile httpProfile = new HttpProfile();
         httpProfile.setEndpoint(CDN_ENDPOINT);
         ClientProfile clientProfile = new ClientProfile();
