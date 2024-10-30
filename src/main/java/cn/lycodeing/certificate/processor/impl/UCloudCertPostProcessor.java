@@ -38,7 +38,9 @@ public class UCloudCertPostProcessor implements CertPostProcessor {
     }
 
 
-    private static Integer uploadSSl(Map<String, String> sslParams) throws IOException {
+    private Integer uploadSSl(Map<String, String> sslParams) throws IOException {
+        log.info("Upload Normal Certificate");
+        log.debug("Upload Normal Certificate Request: {}", sslParams);
         String respStr = HttpClientUtil.sendPost(API_ENDPOINT, sslParams, null);
         log.debug("Upload Normal Certificate Response: {}", respStr);
         UploadNormalCertificateResponse response = GsonUtil.fromJson(respStr, UploadNormalCertificateResponse.class);
@@ -46,6 +48,7 @@ public class UCloudCertPostProcessor implements CertPostProcessor {
             log.error("Upload Normal Certificate Failed, RetCode: {} , ErrorMsg:{}", response.getRetCode(), response.getMessage());
             throw new RuntimeException("Upload Normal Certificate Failed: " + response.getMessage());
         }
+        log.info("Upload Normal Certificate Success");
         return response.getCertificateID();
     }
 
@@ -64,7 +67,9 @@ public class UCloudCertPostProcessor implements CertPostProcessor {
 
 
     public String getCdnList(UCloudContext context) throws Exception {
+        log.info("Get Cdn List ...............");
         Map<String, String> cdnListParams = getCdnListParams(context);
+        log.debug("Get Cdn List Request: {}", cdnListParams);
         String respStr = HttpClientUtil.sendPost(API_ENDPOINT, cdnListParams, null);
         GetUCdnDomainConfigResponse response = GsonUtil.fromJson(respStr, GetUCdnDomainConfigResponse.class);
         log.debug("getCdnList Response: {}", respStr);
@@ -77,6 +82,7 @@ public class UCloudCertPostProcessor implements CertPostProcessor {
             throw new RuntimeException("No Cdn Domain Found");
         }
         DomainConfigInfo info = response.getDomainList().stream().findFirst().get();
+        log.info("Cdn DomainId: {}, Cdn domain:{}", info.getDomainId(), context.getCdnDomain());
         return info.getDomainId();
 
     }
@@ -100,7 +106,7 @@ public class UCloudCertPostProcessor implements CertPostProcessor {
     public Map<String, String> getCdnListParams(UCloudContext context) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("Action", "GetUcdnDomainConfig");
-        params.put("Domain.N", context.getAlisaName());
+        params.put("Domain.N", context.getCdnDomain());
         params.put("PublicKey", context.getAccessKey());
         String signature = generateSignature(params, context.getAccessSecret());
         params.put("Signature", signature);
