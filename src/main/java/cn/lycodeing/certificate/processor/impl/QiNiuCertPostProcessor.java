@@ -1,8 +1,8 @@
-package cn.lycodeing.certificate.processor;
+package cn.lycodeing.certificate.processor.impl;
 
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.QiNiuContext;
-import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.processor.CertPostProcessor;
 import cn.lycodeing.certificate.utils.FileUtil;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import cn.lycodeing.certificate.utils.HttpClientUtil;
@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -30,8 +29,12 @@ public class QiNiuCertPostProcessor implements CertPostProcessor {
     private static final String UPLOAD_URL = "/sslcert";
     private static final String CDN_CERT_UPDATE_URL = "/domain/%s/httpsconf";
 
-    private static final Type CERT_RESPONSE_TYPE = new com.google.gson.reflect.TypeToken<Map<String, String>>() {
-    }.getType();
+    private QiNiuCertPostProcessor(){}
+
+    public static QiNiuCertPostProcessor create(){
+        return new QiNiuCertPostProcessor();
+    }
+
 
     @Override
     public void postProcess(Context context) {
@@ -126,11 +129,6 @@ public class QiNiuCertPostProcessor implements CertPostProcessor {
 
     private boolean isSuccessResponse(CdnResponse response) {
         return response != null && (response.code == null || response.code == 200);
-    }
-
-    @Override
-    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
-        return PostProcessorTypeEnum.QI_NIU.equals(postProcessorType);
     }
 
     @Data

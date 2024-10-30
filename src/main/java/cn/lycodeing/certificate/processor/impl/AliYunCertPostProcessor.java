@@ -1,8 +1,8 @@
-package cn.lycodeing.certificate.processor;
+package cn.lycodeing.certificate.processor.impl;
 
 import cn.lycodeing.certificate.context.AliYunContext;
 import cn.lycodeing.certificate.context.Context;
-import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.processor.CertPostProcessor;
 import cn.lycodeing.certificate.utils.FileUtil;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import com.aliyun.cas20200407.Client;
@@ -29,6 +29,13 @@ public class AliYunCertPostProcessor implements CertPostProcessor {
     private Client sslClient;
 
     private com.aliyun.cdn20180510.Client cdnClient;
+
+    private AliYunCertPostProcessor() {
+    }
+
+    public static AliYunCertPostProcessor create() {
+        return new AliYunCertPostProcessor();
+    }
 
     @Override
     public void postProcess(Context context) {
@@ -61,11 +68,6 @@ public class AliYunCertPostProcessor implements CertPostProcessor {
             log.error("CDN证书更新失败，请求ID：{}", res.getBody().getRequestId());
         }
         log.info("CDN证书更新成功，请求ID：{}", res.getBody().getRequestId());
-    }
-
-    @Override
-    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
-        return false;
     }
 
     public Long uploadSsl(AliYunContext aliYunContext, String cert, String privateKey) throws Exception {

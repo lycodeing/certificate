@@ -1,8 +1,8 @@
-package cn.lycodeing.certificate.processor;
+package cn.lycodeing.certificate.processor.impl;
 
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.TencentContext;
-import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.processor.CertPostProcessor;
 import cn.lycodeing.certificate.utils.FileUtil;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import com.tencentcloudapi.cdn.v20180606.CdnClient;
@@ -32,6 +32,14 @@ public class TencentCertPostProcessor implements CertPostProcessor {
     private static final String CDN_ENDPOINT = "cdn.tencentcloudapi.com";
 
     private Credential credential;
+
+    private TencentCertPostProcessor() {
+    }
+
+    public static TencentCertPostProcessor create() {
+        return new TencentCertPostProcessor();
+    }
+
 
     @Override
     public void postProcess(Context context) {
@@ -98,9 +106,4 @@ public class TencentCertPostProcessor implements CertPostProcessor {
         return FileUtil.readFileAsString(context.getCertPath() + context.getOutput().get("keyFileName") + KEY_SUFFIX);
     }
 
-
-    @Override
-    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
-        return false;
-    }
 }

@@ -9,7 +9,6 @@ import cn.lycodeing.certificate.service.ICertService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Objects;
 
 public class CoreService {
 
@@ -24,7 +23,6 @@ public class CoreService {
         certService.createCert(context);
         postProcessorTypeEnums.stream()
                 .map(CertPostProcessorFactoryUtils::getCertificatePostProcessor)
-                .filter(Objects::nonNull)
                 .forEach(processor -> processor.postProcess(context));
     }
 

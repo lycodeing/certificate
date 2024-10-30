@@ -20,6 +20,15 @@ public enum PostProcessorTypeEnum {
     /**
      * 阿里云
      */
-    ALIYUN
+    ALIYUN,
 
+    /**
+     * 华为云
+     */
+    HUAWEI,
+
+    /**
+     * UCLOUD
+     */
+    U_CLOUD,
 }

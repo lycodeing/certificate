@@ -100,7 +100,18 @@
             <version>4.0.0</version>
         </dependency>
 
+        <!--华为SSL API-->
+        <dependency>
+            <groupId>com.huaweicloud.sdk</groupId>
+            <artifactId>huaweicloud-sdk-scm</artifactId>
+            <version>3.1.119</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
     </dependencies>
 
 

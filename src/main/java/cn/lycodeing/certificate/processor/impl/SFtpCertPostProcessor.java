@@ -1,8 +1,8 @@
-package cn.lycodeing.certificate.processor;
+package cn.lycodeing.certificate.processor.impl;
 
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.SFtpContext;
-import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.processor.CertPostProcessor;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import com.jcraft.jsch.*;
 import com.sun.istack.NotNull;
@@ -19,6 +19,15 @@ import static cn.lycodeing.certificate.constant.CommonConstant.*;
 @Slf4j
 public class SFtpCertPostProcessor implements CertPostProcessor {
 
+    private static final SFtpCertPostProcessor INSTANCE = new SFtpCertPostProcessor();
+
+
+    private SFtpCertPostProcessor() {
+    }
+
+    public static SFtpCertPostProcessor create() {
+        return INSTANCE;
+    }
 
     @Override
     public void postProcess(Context context) {
@@ -111,10 +120,5 @@ public class SFtpCertPostProcessor implements CertPostProcessor {
                 throw e; // 处理其他异常
             }
         }
-    }
-
-    @Override
-    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
-        return PostProcessorTypeEnum.SFTP.equals(postProcessorType);
     }
 }

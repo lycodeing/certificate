@@ -1,8 +1,8 @@
-package cn.lycodeing.certificate.processor;
+package cn.lycodeing.certificate.processor.impl;
 
 import cn.lycodeing.certificate.context.Context;
 import cn.lycodeing.certificate.context.SSHContext;
-import cn.lycodeing.certificate.enums.PostProcessorTypeEnum;
+import cn.lycodeing.certificate.processor.CertPostProcessor;
 import cn.lycodeing.certificate.utils.GsonUtil;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -16,9 +16,17 @@ import java.io.InputStreamReader;
 
 @Slf4j
 public class SSHCertPostProcessor implements CertPostProcessor {
+
+    private SSHCertPostProcessor() {}
+
+    public static SSHCertPostProcessor create() {
+        return new SSHCertPostProcessor();
+    }
+
+
     @Override
     public void postProcess(Context context) {
-        SSHContext sshContext = GsonUtil.fromJson(context.getPostProcessorData(),SSHContext.class);
+        SSHContext sshContext = GsonUtil.fromJson(context.getPostProcessorData(), SSHContext.class);
         try {
             JSch jsch = new JSch();
             // 创建Session实例
@@ -85,11 +93,6 @@ public class SSHCertPostProcessor implements CertPostProcessor {
                 in.close();
             }
         }
-    }
-
-    @Override
-    public boolean isPostProcessorType(PostProcessorTypeEnum postProcessorType) {
-        return PostProcessorTypeEnum.SSH.equals(postProcessorType);
     }
 }
 
