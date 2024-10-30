@@ -89,7 +89,6 @@ public class UCloudCertPostProcessor implements CertPostProcessor {
         params.put("CertId", String.valueOf(certId));
         params.put("PublicKey", context.getAccessKey());
         params.put("HttpsStatusCn", "enable");
-        params.put("HttpsStatusAbroad", "true");
         params.put("CertType", "ussl");
         params.put("CertName", context.getAlisaName());
         String signature = generateSignature(params, context.getAccessSecret());

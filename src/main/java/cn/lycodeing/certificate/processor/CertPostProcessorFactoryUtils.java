@@ -12,7 +12,7 @@ public class CertPostProcessorFactoryUtils {
             case TENCENT -> TencentCertPostProcessor.create();
             case ALIYUN -> AliYunCertPostProcessor.create();
             case HUAWEI -> HuaWeiCertPostProcessor.create();
-            case U_CLOUD -> null;
+            case U_CLOUD -> new UCloudCertPostProcessor();
         };
     }
 }
