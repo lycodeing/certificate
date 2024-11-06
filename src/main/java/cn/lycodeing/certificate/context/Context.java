@@ -1,66 +1,36 @@
 package cn.lycodeing.certificate.context;
 
+import cn.lycodeing.certificate.enums.TaskTypeEnum;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Data
 public class Context {
 
     /**
-     * 域名
+     * 任务ID
      */
-    private String domain;
+    private String taskId;
 
     /**
-     * 证书临时保存地址
+     * 环境信息
      */
-    private String certPath;
+    private Map<String, String> envs;
 
     /**
-     * 证书供应商
+     * 任务类型
      */
-    private String certProvider;
+    private TaskTypeEnum taskType;
 
     /**
-     * 证书供应商的API密钥或认证信息
+     * 证书信息
+     * CDN处理器数据
+     * SSH
+     * SFTP
      */
-    private String apiKey;
-
-    /**
-     * 账号邮箱
-     */
-    private String email;
-
-    /**
-     * 申请证书的子域名地址
-     */
-    private List<String> domains;
-
-    /**
-     * dns解析的供应商
-     */
-    private String dnsType;
-
-    /**
-     * 账号公钥
-     */
-    private String accessKey;
-
-
-    /**
-     * 账号密钥
-     */
-    private String accessSecret;
-
-
-    /**
-     * 后续处理器数据
-     */
-    private String postProcessorData;
-
+    private String data;
 
     /**
      * 输出数据
